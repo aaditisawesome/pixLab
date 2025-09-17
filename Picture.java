@@ -554,6 +554,20 @@ public void seeing4()
       }
     }
   }
+
+  // by Aadit Bansal
+  public void fixUnderwater(){
+    Pixel[][] pixels = this.getPixels2D();
+    for (int row = 0; row < pixels.length; row++)
+    {
+      for (int col = 0; col < pixels[0].length; col++)
+      {
+        Pixel pixelObj = pixels[row][col];
+        pixelObj.setGreen((int)Math.min(255, pixelObj.getGreen() * 0.9));
+        pixelObj.setBlue((int)Math.min(255, pixelObj.getBlue() * 1.2));
+      }
+    }
+  }
   
   
   /* Main method for testing - each class in Java can have a main 

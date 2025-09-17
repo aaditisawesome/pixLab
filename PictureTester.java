@@ -50,6 +50,14 @@ public class PictureTester
     swan.edgeDetection(10);
     swan.explore();
   }
+
+  // by Aadit Bansal
+  public static void testFixUnderwater()
+  {
+    Picture underwater = new Picture("water.jpg");
+    //underwater.fixUnderwater();
+    underwater.explore();
+  }
   
   /** Main method for testing.  Every class can have a main
     * method in Java */
@@ -58,7 +66,7 @@ public class PictureTester
     // uncomment a call here to run a test
     // and comment out the ones you don't want
     // to run
-    testZeroBlue();
+    // testZeroBlue();
     //testKeepOnlyBlue();
     //testKeepOnlyRed();
     //testKeepOnlyGreen();
@@ -80,5 +88,6 @@ public class PictureTester
     //testSetRedToHalfValueInTopHalf();
     //testClearBlueOverValue(200);
     //testGetAverageForColumn(0);
+    testFixUnderwater();
   }
 }
