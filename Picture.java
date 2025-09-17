@@ -555,6 +555,33 @@ public void seeing4()
     }
   }
   
+  /** 
+   * BY NEEV
+   * Method that mirrors the picture around a diagonal line
+   * from bottom left to top right. This copies the triangular
+   * area below and to the left of the diagonal (where row > col)
+   * to the area above and to the right of the diagonal.
+  */
+  public void mirrorDiagonal()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel sourcePixel = null;
+    Pixel targetPixel = null;
+    int size = Math.min(pixels.length, pixels[0].length);
+    
+    // Loop through the lower left triangle (where row > col)
+    for (int row = 0; row < size; row++)
+    {
+      for (int col = 0; col < row; col++)
+      {
+        // Copy from bottom-left triangle to top-right triangle
+        sourcePixel = pixels[row][col];
+        targetPixel = pixels[col][row];
+        targetPixel.setColor(sourcePixel.getColor());
+      }
+    }
+  }
+  
   
   /* Main method for testing - each class in Java can have a main 
    * method 
