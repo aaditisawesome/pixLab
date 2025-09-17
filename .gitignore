@@ -1,0 +1,28 @@
+# Java build artifacts
+*.class
+
+# BlueJ/IDE metadata
+*.ctxt
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# Build output directories (common)
+bin/
+out/
+build/
+target/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Logs
+*.log
+
+
