@@ -43,11 +43,24 @@ public class PictureTester
     canvas.explore();
   }
   
-  /** Method to test edgeDetection */
+  /** Method to test edgeDetection 
+     Already existing
+     */
   public static void testEdgeDetection()
   {
     Picture swan = new Picture("swan.jpg");
+    swan.explore();
     swan.edgeDetection(10);
+    swan.explore();
+  }
+  
+  /** Method to test edgeDetectionNew 
+   * Enhanced edge detection with vertical detection by NEEV
+   */
+  public static void testEdgeDetectionNew()
+  {
+    Picture swan = new Picture("swan.jpg");
+    swan.edgeDetectionNew(10);
     swan.explore();
   }
   
@@ -89,10 +102,11 @@ public class PictureTester
     //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
-    testMirrorDiagonal();
+    //testMirrorDiagonal();
     //testCollage();
     //testCopy();
-    //testEdgeDetection();
+    testEdgeDetection();
+    testEdgeDetectionNew();
     //testEdgeDetection2();
     //testChromakey();
     //testEncodeAndDecode();
@@ -100,6 +114,6 @@ public class PictureTester
     //testSetRedToHalfValueInTopHalf();
     //testClearBlueOverValue(200);
     //testGetAverageForColumn(0);
-    testFixUnderwater();
+    //testFixUnderwater();
   }
 }
