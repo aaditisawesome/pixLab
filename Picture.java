@@ -603,7 +603,11 @@ public void seeing4()
     }
   }
 
-  // by Aadit Bansal
+  /**
+   * BY AADIT
+   * Fixes an image which was taken underwater, so that things like
+   * fishes are more visible and clearer
+   */
   public void fixUnderwater(){
     Pixel[][] pixels = this.getPixels2D();
     for (int row = 0; row < pixels.length; row++)
@@ -611,11 +615,31 @@ public void seeing4()
       for (int col = 0; col < pixels[0].length; col++)
       {
         Pixel pixelObj = pixels[row][col];
-        pixelObj.setGreen((int)Math.min(255, pixelObj.getGreen() * 0.9));
-        pixelObj.setBlue((int)Math.min(255, pixelObj.getBlue() * 1.2));
-      }
+        // Red is prominent in water, but not in fishes
+        // Green is prominent in both water and fishes
+        // Blue is prominent in both, but more in fishes
+        // Increasing red and decrease green allows us to distinguish water and fishes
+        pixelObj.setGreen((int)Math.min(255, pixelObj.getGreen() * 0.35)); 
+        pixelObj.setRed((int)Math.min(255, pixelObj.getRed() * 2.65));
+        // Whenever red is less, it's most likely a fish
+        // This will allow us to increase blue/green factor in fishes and increase contrast
+        if(pixelObj.getRed() <= 53){
+          try{
+            // Remove outliers by testing the pixels around it
+            if(pixels[row+1][col].getRed() <= 53 && pixels[row-1][col].getRed() <= 53
+                && pixels[row][col+1].getRed() <= 53 && pixels[row][col-1].getRed() <= 53){
+              pixelObj.setBlue((int)Math.min(255, pixelObj.getBlue() * 1.1));
+              pixelObj.setGreen((int)Math.min(255, pixelObj.getGreen() * 1.1));
+            }
+            }
+          catch(IndexOutOfBoundsException error){ // edge of picture
+              pixelObj.setBlue((int)Math.min(255, pixelObj.getBlue() * 1.1));
+              pixelObj.setGreen((int)Math.min(255, pixelObj.getGreen() * 1.1));
+          }
+          }
+        }
     }
-  }
+}
   
   /** 
    * BY NEEV

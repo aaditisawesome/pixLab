@@ -76,11 +76,15 @@ public class PictureTester
   }
   
 
-  // by Aadit Bansal
+  /**
+   * BY AADIT
+   * Method to test the feature which fixes underwater images
+   */
   public static void testFixUnderwater()
   {
     Picture underwater = new Picture("water.jpg");
-    //underwater.fixUnderwater();
+    underwater.explore();
+    underwater.fixUnderwater();
     underwater.explore();
   }
   
