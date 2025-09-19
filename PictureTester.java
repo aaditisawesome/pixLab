@@ -74,7 +74,6 @@ public class PictureTester
     beach.mirrorDiagonal();
     beach.explore();
   }
-  
 
   /**
    * BY AADIT
@@ -86,6 +85,17 @@ public class PictureTester
     underwater.explore();
     underwater.fixUnderwater();
     underwater.explore();
+  }
+
+  public static void testColorSplash()
+  {
+    Picture koala = new Picture("koala.jpg");
+    Picture koala2 = new Picture("koala.jpg");
+    koala.explore();
+    koala.colorSplashNoBlend(100, 250, 100, 250);
+    koala.explore();
+    koala2.colorSplash(100, 250, 100, 250, 20);
+    koala2.explore();
   }
   
   /**
@@ -150,6 +160,8 @@ public class PictureTester
     //testCopy();
     //testEdgeDetection();
     //testEdgeDetectionNew();
+    //testEdgeDetection();
+    //testEdgeDetectionNew();
     //testEdgeDetection2();
     //testChromakey();
     //testEncodeAndDecode();
@@ -163,5 +175,6 @@ public class PictureTester
     testApplyVignetteEffectSubtle();
     testApplyVignetteEffectDramatic();
     testApplyVignetteEffectExtreme();
+    testColorSplash();
   }
 }
