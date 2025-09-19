@@ -658,44 +658,49 @@ public void seeing4()
     {
       for (int col = 0; col < pixels[0].length; col++)
       {
-        Pixel pixelObj = pixels[row][col];
+        try{
+          Pixel pixelObj = pixels[row][col];
 
-        // blend factor calculation (1.0 = full color, 0.0 = full grayscale)
-        double blend = 0.0;
-        if (row >= startRow && row <= endRow && col >= startCol && col <= endCol) { // In colored region
-          blend = 1.0;
-        } else {
-          // Outside the colored region, check if within blendWidth of the border
-          int distToRow = 0, distToCol = 0;
-          if (row < startRow){
-            distToRow = startRow - row;
-          }
-          else if (row > endRow){
-            distToRow = row - endRow;
-          }
-          if (col < startCol){
-            distToCol = startCol - col;
-          }
-          else if (col > endCol){
-            distToCol = col - endCol;
-          }
-          int minDist = Math.max(distToRow, distToCol);
-          if (minDist < blendWidth) {
-            // calculate blend factor within border region
-            blend = 1.0 - ((double)minDist / blendWidth);
+          // blend factor calculation (1.0 = full color, 0.0 = full grayscale)
+          double blend = 0.0;
+          if (row >= startRow && row <= endRow && col >= startCol && col <= endCol) { // In colored region
+            blend = 1.0;
           } else {
-            blend = 0.0; // full grayscale if not in border region
+            // Outside the colored region, check if within blendWidth of the border
+            int distToRow = 0, distToCol = 0;
+            if (row < startRow){
+              distToRow = startRow - row;
+            }
+            else if (row > endRow){
+              distToRow = row - endRow;
+            }
+            if (col < startCol){
+              distToCol = startCol - col;
+            }
+            else if (col > endCol){
+              distToCol = col - endCol;
+            }
+            int minDist = Math.max(distToRow, distToCol);
+            if (minDist < blendWidth) {
+              // calculate blend factor within border region
+              blend = 1.0 - ((double)minDist / blendWidth);
+            } else {
+              blend = 0.0; // full grayscale if not in border region
+            }
           }
+
+          int red = pixelObj.getRed();
+          int green = pixelObj.getGreen();
+          int blue = pixelObj.getBlue();
+
+          // add combination of grayscale and color based on blend factor
+          int avg = (red + green + blue) / 3;
+          pixelObj.setRed((int)(red * blend + avg * (1 - blend)));
+          pixelObj.setGreen((int)(green * blend + avg * (1 - blend)));
+          pixelObj.setBlue((int)(blue * blend + avg * (1 - blend)));
+        }catch(IndexOutOfBoundsException error){
+          continue;
         }
-
-        int red = pixelObj.getRed();
-        int green = pixelObj.getGreen();
-        int blue = pixelObj.getBlue();
-
-        int avg = (red + green + blue) / 3;
-        pixelObj.setRed((int)(red * blend + avg * (1 - blend)));
-        pixelObj.setGreen((int)(green * blend + avg * (1 - blend)));
-        pixelObj.setBlue((int)(blue * blend + avg * (1 - blend)));
       }
     }
   }
@@ -711,28 +716,31 @@ public void seeing4()
    */
   public void colorSplashNoBlend(int startRow, int endRow, int startCol, int endCol){
     Pixel[][] pixels = this.getPixels2D();
-    int blendWidth = 20; // width of the blending border in pixels
 
     for (int row = 0; row < pixels.length; row++)
     {
       for (int col = 0; col < pixels[0].length; col++)
       {
-        Pixel pixelObj = pixels[row][col];
+        try{
+          Pixel pixelObj = pixels[row][col];
 
-        boolean grayScale = true;
-        if (row >= startRow && row <= endRow && col >= startCol && col <= endCol) { // within colored region
-          grayScale = false;
-        }
+          boolean grayScale = true;
+          if (row >= startRow && row <= endRow && col >= startCol && col <= endCol) { // within colored region
+            grayScale = false;
+          }
 
-        int red = pixelObj.getRed();
-        int green = pixelObj.getGreen();
-        int blue = pixelObj.getBlue();
+          int red = pixelObj.getRed();
+          int green = pixelObj.getGreen();
+          int blue = pixelObj.getBlue();
 
-        if(grayScale){ // change to grayscale if it's outs
-          int avg = (red + green + blue) / 3;
-          pixelObj.setRed(avg);
-          pixelObj.setGreen(avg);
-          pixelObj.setBlue(avg);
+          if(grayScale){ // change to grayscale if it's outside the rectangular region
+            int avg = (red + green + blue) / 3;
+            pixelObj.setRed(avg);
+            pixelObj.setGreen(avg);
+            pixelObj.setBlue(avg);
+          }
+        }catch(IndexOutOfBoundsException error){
+          continue;
         }
       }
     }
