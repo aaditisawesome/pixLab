@@ -88,6 +88,45 @@ public class PictureTester
     underwater.explore();
   }
   
+  /**
+   * Method to test the vignette effect - Subtle Effect
+   * Creates a gentle darkening effect from edges towards center
+   * BY NEEV
+   */
+  public static void testApplyVignetteEffectSubtle()
+  {
+    Picture beach = new Picture("beach.jpg");
+    beach.explore();
+    beach.applyVignetteEffect(0.4, 0.6);  // 40% darkening, starts at 60% radius
+    beach.explore();
+  }
+  
+  /**
+   * Method to test the vignette effect - Dramatic Effect
+   * Creates a strong, noticeable vignette effect
+   * BY NEEV
+   */
+  public static void testApplyVignetteEffectDramatic()
+  {
+    Picture butterfly = new Picture("butterfly1.jpg");
+    butterfly.explore();
+    butterfly.applyVignetteEffect(0.8, 0.3);  // 80% darkening, starts at 30% radius
+    butterfly.explore();
+  }
+  
+  /**
+   * Method to test the vignette effect - Extreme Effect
+   * Creates a very strong vignette with early onset
+   * BY NEEV
+   */
+  public static void testApplyVignetteEffectExtreme()
+  {
+    Picture flower = new Picture("flower1.jpg");
+    flower.explore();
+    flower.applyVignetteEffect(0.95, 0.1);  // 95% darkening, starts at 10% radius
+    flower.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -109,8 +148,8 @@ public class PictureTester
     //testMirrorDiagonal();
     //testCollage();
     //testCopy();
-    testEdgeDetection();
-    testEdgeDetectionNew();
+    //testEdgeDetection();
+    //testEdgeDetectionNew();
     //testEdgeDetection2();
     //testChromakey();
     //testEncodeAndDecode();
@@ -119,5 +158,10 @@ public class PictureTester
     //testClearBlueOverValue(200);
     //testGetAverageForColumn(0);
     //testFixUnderwater();
+    
+    // Test vignette effects with different intensities
+    testApplyVignetteEffectSubtle();
+    testApplyVignetteEffectDramatic();
+    testApplyVignetteEffectExtreme();
   }
 }

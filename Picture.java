@@ -668,6 +668,74 @@ public void seeing4()
     }
   }
   
+  /**
+   * Apply a vignette effect to the image, darkening the edges to draw attention to the center.
+   * This creates a gradual darkening from the center towards the edges of the image.
+   * BY NEEV
+   * 
+   * @param percentDarken the maximum percentage to darken (0.0-1.0, where 1.0 is completely black)
+   * @param radiusRatio the ratio (0.0-1.0) of the image radius where the effect becomes prominent 
+   * (0.0 = effect starts from center, 1.0 = effect only at edges)
+   */
+  public void applyVignetteEffect(double percentDarken, double radiusRatio)
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    int width = pixels[0].length;
+    int height = pixels.length;
+    
+    double centerX = width / 2.0;
+    double centerY = height / 2.0;
+    
+    double maxDistance = Math.sqrt(centerX * centerX + centerY * centerY);
+    
+    for (int row = 0; row < height; row++)
+    {
+      for (int col = 0; col < width; col++)
+      {
+        Pixel pixel = pixels[row][col];
+        
+        double distance = Math.sqrt(Math.pow(col - centerX, 2) + Math.pow(row - centerY, 2));
+        
+        // Normalize distance (0.0 at center, 1.0 at corners)
+        double normalizedDistance = distance / maxDistance;
+        
+        // Calculate vignette factor based on radiusRatio
+        double vignetteFactor;
+        if (normalizedDistance <= radiusRatio) {
+          vignetteFactor = 0.0;
+        } else {
+          vignetteFactor = (normalizedDistance - radiusRatio) / (1.0 - radiusRatio);
+          // Apply power curve for more dramatic darkening
+          vignetteFactor = Math.pow(vignetteFactor, 1.5);
+        }
+        
+        // Clamp vignette factor between 0.0 and 1.0
+        vignetteFactor = Math.min(1.0, vignetteFactor);
+        
+        // Calculate darkening amount with enhanced intensity
+        double darkeningAmount = percentDarken * vignetteFactor;
+        
+        int red = pixel.getRed();
+        int green = pixel.getGreen();
+        int blue = pixel.getBlue();
+        
+        // Calculate new RGB values
+        int newRed = (int) Math.max(0, red * (1.0 - darkeningAmount));
+        int newGreen = (int) Math.max(0, green * (1.0 - darkeningAmount));
+        int newBlue = (int) Math.max(0, blue * (1.0 - darkeningAmount));
+        
+        newRed = Math.min(255, newRed);
+        newGreen = Math.min(255, newGreen);
+        newBlue = Math.min(255, newBlue);
+        
+        // Set the new color
+        pixel.setRed(newRed);
+        pixel.setGreen(newGreen);
+        pixel.setBlue(newBlue);
+      }
+    }
+  }
+  
   
   /* Main method for testing - each class in Java can have a main 
    * method 
